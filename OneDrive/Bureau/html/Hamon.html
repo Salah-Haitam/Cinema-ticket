@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinéma Studio</title>
+    <link rel="icon" type="image/png" href="OIP.jpg">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+
+        body {
+            font-family:Comic Sans MS, Comic Sans, cursive;
+            background-color: #121212;
+            color: white;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #1c1c1c;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+            color: #ff6347;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #ff6347;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 50px 20px;
+            background-image: url('https://source.unsplash.com/1600x900/?cinema');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero p {
+            font-size: 18px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+        }
+
+        .section {
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #ff6347;
+        }
+
+        .movie-container {
+            display: flex;
+            overflow-x: scroll;
+            gap: 20px;
+            padding-bottom: 10px;
+            scroll-behavior: smooth;
+        }
+
+        .movie-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .movie-container::-webkit-scrollbar-thumb {
+            background-color: #ff6347;
+            border-radius: 10px;
+        }
+
+        .movie-card {
+            min-width: 250px;
+            flex-shrink: 0;
+            background-color: #1c1c1c;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .movie-card img {
+            height: 200px;
+            object-fit: cover;
+        }
+        .movie-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+        }
+
+        .movie-card .info {
+            padding: 15px;
+        }
+
+        .movie-card .info h3 {
+            font-size: 18px;
+            color: #ff6347;
+            margin-bottom: 10px;
+        }
+
+        .movie-card .info p {
+            font-size: 14px;
+            color: #bbb;
+        }
+
+        .rating {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .rating span {
+            font-size: 20px;
+            color: #ff6347;
+            cursor: pointer;
+        }
+
+        .rating span {
+           font-size: 20px;
+           color: #ff6347;
+           cursor: pointer;
+           transition: color 0.3s;
+        }
+
+        .rating span.active {
+            color: gold;
+         }
+
+
+        .reservation-btn {
+            margin-top: 15px;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .reservation-btn:hover {
+            background-color: #e55337;
+        }
+
+        .comments {
+            margin-top: 10px;
+        }
+
+        .comments textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 10px;
+        }
+
+        .comments .add-comment-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .comments .add-comment-btn:hover {
+            background-color: #e55337;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #1c1c1c;
+            color: white;
+            margin-top: 30px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        footer a {
+            color: #ff6347;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Cinéma Studio</h1>
+        <nav>
+            <ul>
+                <li><a href="#movies">Films</a></li>
+                <li><a href="#comingSoon">À venir</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="mini jeu.html">Mini Jeux</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <h1>Découvrez les dernières nouveautés du cinéma</h1>
+        <p>Explorez notre sélection de films et réservez vos places dès maintenant.</p>
+    </div>
+
+    <section class="section" id="movies">
+        <h2>Films à l'affiche</h2>
+        <div class="movie-container" id="movieGrid"></div>
+    </section>
+
+    <section class="section" id="comingSoon">
+        <h2>Prochainement</h2>
+        <div class="movie-container" id="comingSoonGrid"></div>
+    </section>
+
+    <footer>
+        <p>© 2025 Cinéma Studio. Tous droits réservés. <a href="contact.html">Nous contacter</a></p>
+    </footer>
+
+    <script>
+        
+        const movies = [
+            {
+                title: "Avatar : La Voie de l'eau",
+                description: "Explorez Pandora dans cette suite époustouflante.",
+                image: "https://www.bing.com/th?id=OIP.q2Ve7gmCyWn0F7_bRUwgWwHaEK&w=314&h=200&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
+                comingSoon: false
+            },
+            {
+                title: "Oppenheimer",
+                description: "L'histoire captivante du père de la bombe atomique.",
+                image: "https://th.bing.com/th/id/OIP.q2UTWS9NCvtPq1BQ8OCmowHaEK?rs=1&pid=ImgDetMain",
+                comingSoon: false
+            },
+            {
+                title: "Barbie",
+                description: "Un monde rose et des aventures incroyables.",
+                image: "https://th.bing.com/th/id/OIP.cX95n619-GJM1Xo7A9qz3AAAAA?rs=1&pid=ImgDetMain",
+                comingSoon: true
+            },
+            {
+                title: "Dune: Partie Deux",
+                description: "La suite tant attendue de l'épopée de science-fiction.",
+                image: "https://images.wallpapersden.com/image/download/dune-part-two-poster_bmVuZWWUmZqaraWkpJRmbmdlrWZlbWU.jpg",
+                comingSoon: false
+            },
+            {
+                title: "Indiana Jones",
+                description: "Une aventure légendaire avec Indiana Jones.",
+                image: "https://th.bing.com/th/id/OIP.bqAZQcUsMPoeCox8TPMjAAHaFj?rs=1&pid=ImgDetMain",
+                comingSoon: false
+            },
+            {
+                title: "Mission Impossible",
+                description: "Une mission pleine d'action et de suspense.",
+                image: "https://images-na.ssl-images-amazon.com/images/I/81iPPyMC5JL._SL1500_.jpg",
+                comingSoon: true
+            }
+        ];
+    
+        const movieGrid = document.getElementById('movieGrid');
+        const comingSoonGrid = document.getElementById('comingSoonGrid');
+    
+        movies.forEach(movie => {
+            const movieCard = document.createElement('div');
+            movieCard.classList.add('movie-card');
+            movieCard.innerHTML = `
+                <img src="${movie.image}" alt="${movie.title}" style="height: 200px; object-fit: cover;">
+                <div class="info">
+                    <h3>${movie.title}</h3>
+                    <p>${movie.description}</p>
+                    <div class="rating">
+                        <span data-rating="1">★</span>
+                        <span data-rating="2">★</span>
+                        <span data-rating="3">★</span>
+                        <span data-rating="4">★</span>
+                        <span data-rating="5">★</span>
+                    </div>
+                    <button class="reservation-btn">Réserver</button>
+                    <div class="comments">
+                        <textarea placeholder="Ajoutez un commentaire"></textarea>
+                        <button class="add-comment-btn">Ajouter</button>
+                        <ul class="comment-list"></ul>
+                    </div>
+                </div>
+            `;
+    
+            const reservationBtn = movieCard.querySelector('.reservation-btn');
+            const addCommentBtn = movieCard.querySelector('.add-comment-btn');
+            const commentTextarea = movieCard.querySelector('textarea');
+            const commentList = movieCard.querySelector('.comment-list');
+            const ratingStars = movieCard.querySelectorAll('.rating span');
+    
+            // Ajouter un événement de clic pour le bouton Réserver
+            reservationBtn.addEventListener('click', () => {
+                alert('Réservation réussie !');
+            });
+    
+            // Ajouter un événement de clic pour le bouton Ajouter un commentaire
+            addCommentBtn.addEventListener('click', () => {
+                const comment = commentTextarea.value.trim();
+                if (comment) {
+                    const commentItem = document.createElement('li');
+                    commentItem.textContent = comment;
+                    commentList.appendChild(commentItem);
+                    commentTextarea.value = ''; // Réinitialiser le champ de texte
+                } else {
+                    alert('Veuillez entrer un commentaire.');
+                }
+            });
+    
+            // Ajouter des événements pour les étoiles de notation
+            ratingStars.forEach((star, index) => {
+                star.addEventListener('click', () => {
+                    // Réinitialiser toutes les étoiles
+                    ratingStars.forEach(s => s.classList.remove('active'));
+    
+                    // Activer les étoiles jusqu'à celle cliquée
+                    for (let i = 0; i <= index; i++) {
+                        ratingStars[i].classList.add('active');
+                    }
+    
+                    // Afficher la note sélectionnée
+                    alert(`Vous avez donné une note de ${index + 1} étoile(s) à "${movie.title}"`);
+                });
+            });
+    
+            // Ajouter la carte du film dans la bonne section
+            if (movie.comingSoon) {
+                comingSoonGrid.appendChild(movieCard);
+            } else {
+                movieGrid.appendChild(movieCard);
+            }
+        });
+    </script>
+    
+    
+</body>
+</html>

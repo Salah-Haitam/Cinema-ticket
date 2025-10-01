@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Jeu - Cinéma</title>
+    <link rel="icon" type="image/png" href="OIP.jpg">
+    <style>
+        /* Global Styles */
+             /* Global Styles */
+             * {
+          /*margin: 0;*/
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            color: #ff6347;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .box {
+            width: 100px;
+            height: 150px;
+            background-color: #444;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #888;
+            cursor: pointer;
+            transition: transform 0.6s;
+            perspective: 1000px;
+            position: relative;
+        }
+
+        .box-inner {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            transform: rotateY(0);
+            transition: transform 0.6s;
+        }
+
+        .box.flipped .box-inner {
+            transform: rotateY(180deg);
+        }
+
+        .box-front,
+        .box-back {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+        }
+
+        .box-front {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #444;
+        }
+
+        .box-back {
+            background-color: #4CAF50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotateY(180deg);
+        }
+
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #e55337;
+        }
+    </style>
+</head>
+<body>
+    <h1>Choisissez une boîte pour voir si vous avez gagné !</h1>
+
+    <div class="container">
+        <div class="box" id="box1">
+            <div class="box-inner">
+                <div class="box-front">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1655/1655800.png" alt="Popcorn" width="50">
+                    <span>Popcorn</span>
+                </div>
+                <div class="box-back">
+                    🎟️ Coupon de 50% !
+                </div>
+            </div>
+        </div>
+        <div class="box" id="box2">
+            <div class="box-inner">
+                <div class="box-front">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1655/1655800.png" alt="Clap" width="50">
+                    <span>Clap</span>
+                </div>
+                <div class="box-back">
+                    🎟️ Coupon de 50% !
+                </div>
+            </div>
+        </div>
+        <div class="box" id="box3">
+            <div class="box-inner">
+                <div class="box-front">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1655/1655800.png" alt="Ticket" width="50">
+                    <span>Ticket</span>
+                </div>
+                <div class="box-back">
+                    🎟️ Coupon de 50% !
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="back-button" onclick="window.location.href='Hamon.html'">Retour aux Films</button>
+
+    <script>
+        const boxes = document.querySelectorAll('.box');
+        let winningBox;
+        let gameActive = true;
+
+        function assignWinningBox() {
+            winningBox = `box${Math.floor(Math.random() * 3) + 1}`;
+        }
+
+        function revealCard(box) {
+            if (!gameActive) return; 
+            box.classList.add('flipped');
+            setTimeout(() => {
+                if (box.id === winningBox) {
+                    alert('Félicitations ! Vous avez trouvé le coupon de 50% 🎉');
+                } else {
+                    alert('Dommage, ce n’est pas le bon choix.');
+                }
+                gameActive = false; 
+                assignWinningBox(); 
+            }, 600); 
+        }
+
+        boxes.forEach(box => {
+            box.addEventListener('click', () => {
+                if (!box.classList.contains('flipped')) {
+                    revealCard(box);
+                    
+                    setTimeout(() => {
+                        boxes.forEach(b => {
+                            b.classList.remove('flipped');
+                            
+                            const back = b.querySelector('.box-back');
+                            back.innerHTML = (b.id === winningBox) ? '🎟️ Coupon de 50% !' : '❌ Pas de coupon ici !';
+                        });
+                        gameActive = true; 
+                    }, 2000);
+                }
+            });
+        });
+
+        assignWinningBox();
+    </script>
+</body>
+</html>
